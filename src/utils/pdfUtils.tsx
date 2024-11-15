@@ -8,7 +8,38 @@ export const generatePDF = async (
   problemDescription: string,
   responsible: string,
   additionalNotes: string
+
 ) => {
+  console.log('fecha:', dateTime);
+  const data = {
+    clientName,
+    dateTime : '10/12/2024',
+    problemType,
+    problemDescription,
+    responsible,
+    additionalNotes
+  }
+  console.log(data);
+
+  try {
+      const response = await fetch('https://app-soporte-siroe.vercel.app/ingresar-levantamiento', {
+          method: 'POST',
+          headers: {
+              "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data)
+      });
+
+      if (!response.ok) {
+          throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
+      }
+
+      const serverResponse = await response.json();
+      console.log('Respuesta del servidor:', serverResponse);
+  } catch (error) {
+      console.error('Error al enviar los datos:', error);
+  }
+
   const html = `
     <html>
       <head>
