@@ -1,20 +1,28 @@
 import React, { useState } from 'react';
 import { View, TextInput, Button, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import { generatePDF } from '../utils/pdfUtils';
 
 export default function PDFCreationScreen() {
   const [clientName, setClientName] = useState('');
-  const [dateTime, setDateTime] = useState('');
+  const [dateTime, setDateTime] = useState(new Date());
+  const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [problemType, setProblemType] = useState('Hardware');
   const [problemDescription, setProblemDescription] = useState('');
   const [responsible, setResponsible] = useState('');
   const [additionalNotes, setAdditionalNotes] = useState('');
 
-  const handleGeneratePDF = () => {
-    generatePDF(clientName, dateTime, problemType, problemDescription, responsible, additionalNotes);
+  const handleDateConfirm = (selectedDate) => {
+    setDateTime(selectedDate);
+    setDatePickerVisibility(false);
   };
-  
+
+  const handleGeneratePDF = () => {
+    const formattedDateTime = dateTime.toISOString(); // Formato compatible con SQL
+    generatePDF(clientName, formattedDateTime, problemType, problemDescription, responsible, additionalNotes);
+  };
+
   return (
     <View style={styles.container}>
       <TextInput
@@ -24,10 +32,17 @@ export default function PDFCreationScreen() {
         onChangeText={(value) => setClientName(value)}
       />
       <TextInput
-        value={dateTime}
+        value={dateTime.toLocaleString()} // Muestra una fecha legible
         placeholder="Fecha y Hora del Levantamiento"
         style={styles.textInput}
-        onChangeText={(value) => setDateTime(value)}
+        onFocus={() => setDatePickerVisibility(true)} // Abre el selector al hacer foco
+      />
+      <DateTimePickerModal
+        isVisible={isDatePickerVisible}
+        mode="datetime"
+        date={dateTime}
+        onConfirm={handleDateConfirm}
+        onCancel={() => setDatePickerVisibility(false)}
       />
       <Picker
         selectedValue={problemType}

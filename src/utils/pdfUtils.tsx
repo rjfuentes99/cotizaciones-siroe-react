@@ -13,7 +13,7 @@ export const generatePDF = async (
   console.log('fecha:', dateTime);
   const data = {
     clientName,
-    dateTime : '10/12/2024',
+    dateTime,
     problemType,
     problemDescription,
     responsible,
