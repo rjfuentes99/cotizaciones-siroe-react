@@ -61,7 +61,7 @@ const PDFStorageScreen: React.FC = () => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Almacenamiento de PDFs</Text>
+      <Text style={styles.title}>Almacenamiento de Datos</Text>
       <TextInput
         placeholder="Buscar por cliente"
         value={searchTerm}

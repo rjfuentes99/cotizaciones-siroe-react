@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import PDFCreationScreen from '../screens/PDFCreationScreen';
 import PDFStorageScreen from '../screens/PDFStorageScreen';
+import ClientCreationScreen from '../screens/ClientCreationScreen';
 import { Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
@@ -36,7 +37,9 @@ export default function TabNavigator() {
 
             if (route.name === 'Formulario') {
               iconName = 'document-text-outline';
-            } else if (route.name === 'Almacenamiento') {
+            }if (route.name === 'Cliente') {
+              iconName = 'person-outline';;
+            }  else if (route.name === 'Almacenamiento') {
               iconName = 'folder-outline';
             }
 
@@ -48,6 +51,9 @@ export default function TabNavigator() {
       >
         <Tab.Screen name="Formulario" component={PDFCreationScreen} />
         <Tab.Screen name="Almacenamiento" component={PDFStorageScreen} />
+        <Tab.Screen name="Cliente" component={ClientCreationScreen} />
+
+        
       </Tab.Navigator>
     </NavigationContainer>
   );
