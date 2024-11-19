@@ -36,14 +36,42 @@ export const generatePDF = async (
     department,
     phone,
     generalInfo,
+    email,
+    location,
+  };
+
+  console.log('Datos para PDF:', data);
+  let clienteId;
+  try {
+    const response = await fetch('https://app-soporte-siroe.vercel.app/ingresar-levantamiento', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
+    }
+
+    const serverResponse = await response.json();
+    clienteId = serverResponse.id;
+    console.log('Server Response:', serverResponse);
+    console.log('clienteId:', clienteId);
+    console.log('Respuesta del servidor:', serverResponse);
+  } catch (error) {
+    console.error('Error al enviar los datos:', error);
+  }
+
+  const data2 = {
+    clienteId,
     equipmentType,
     brand,
     model,
     serialNumber,
     ipAddress,
     assignedUser,
-    email,
-    location,
     processor,
     ram,
     storage,
@@ -60,28 +88,26 @@ export const generatePDF = async (
     backupSoftware,
     securitySoftware,
     comments,
-  };
+  }
 
-  console.log('Datos para PDF:', data);
-
-  try {
-    const response = await fetch('https://app-soporte-siroe.vercel.app/ingresar-levantamiento', {
+  try{
+    const response = await fetch ('https://app-soporte-siroe.vercel.app/ingresar-equipamiento',{
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(data),
-    });
-
+      body: JSON.stringify(data2),
+    })
     if (!response.ok) {
       throw new Error(`Error en la solicitud: ${response.status} ${response.statusText}`);
     }
-
+ 
     const serverResponse = await response.json();
     console.log('Respuesta del servidor:', serverResponse);
   } catch (error) {
     console.error('Error al enviar los datos:', error);
   }
+
 
   const html = `
     <html>

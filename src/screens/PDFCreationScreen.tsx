@@ -97,7 +97,7 @@ export default function PDFCreationScreen() {
       {isFieldVisible('processor') && (
         <TextInput placeholder="Procesador" style={styles.textInput} value={processor} onChangeText={setProcessor} />
       )}
-      {isFieldVisible('ram') && <TextInput placeholder="Memoria RAM" style={styles.textInput} value={ram} onChangeText={setRam} />}
+      {isFieldVisible('ram') && <TextInput placeholder="Memoria RAM" style={styles.textInput} value={ram} onChangeText={setRam} keyboardType="numeric" />}
       {isFieldVisible('storage') && <TextInput placeholder="Almacenamiento" style={styles.textInput} value={storage} onChangeText={setStorage} />}
       {isFieldVisible('ipAddress') && (
         <TextInput placeholder="Dirección IP" style={styles.textInput} value={ipAddress} onChangeText={setIpAddress} />
