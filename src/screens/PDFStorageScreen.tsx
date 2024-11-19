@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { View, Text, TextInput, ActivityIndicator, FlatList, StyleSheet } from "react-native";
 
 const PDFStorageScreen: React.FC = () => {
-  const [requests, setRequests] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [requests, setRequests] = useState([]); // Datos obtenidos del servidor
+  const [loading, setLoading] = useState(true); // Indicador de carga
   const [searchTerm, setSearchTerm] = useState(""); // Estado para la búsqueda
 
+  // Cargar datos al montar el componente
   useEffect(() => {
     const fetchRequests = async () => {
       try {
@@ -14,11 +15,11 @@ const PDFStorageScreen: React.FC = () => {
           throw new Error(`Error al obtener las solicitudes: ${response.status}`);
         }
         const data = await response.json();
-        setRequests(data);
+        setRequests(data); // Asignar los datos obtenidos
       } catch (error) {
         console.error("Error al cargar las solicitudes:", error);
       } finally {
-        setLoading(false);
+        setLoading(false); // Desactivar el indicador de carga
       }
     };
 
@@ -41,7 +42,6 @@ const PDFStorageScreen: React.FC = () => {
       />
       {loading ? (
         <View style={styles.loaderContainer}>
-          {/* Aquí puedes integrar el loader animado anterior */}
           <ActivityIndicator size="large" color="#0000ff" />
           <Text style={styles.loaderText}>Cargando datos...</Text>
         </View>
@@ -57,13 +57,19 @@ const PDFStorageScreen: React.FC = () => {
                 <Text style={styles.label}>Cliente:</Text> {item.clientName}
               </Text>
               <Text style={styles.itemText}>
-                <Text style={styles.label}>Fecha y Hora:</Text> {item.dateTime}
+                <Text style={styles.label}>Departamento:</Text> {item.department}
               </Text>
               <Text style={styles.itemText}>
-                <Text style={styles.label}>Tipo de Problema:</Text> {item.problemType}
+                <Text style={styles.label}>Telefono:</Text> {item.phone}
               </Text>
               <Text style={styles.itemText}>
-                <Text style={styles.label}>Responsable:</Text> {item.responsible}
+                <Text style={styles.label}>Descripción:</Text> {item.generalInfo}
+              </Text>
+              <Text style={styles.itemText}>
+                <Text style={styles.label}>Email:</Text> {item.email}
+              </Text>
+              <Text style={styles.itemText}>
+                <Text style={styles.label}>Ubicacion:</Text> {item.location}
               </Text>
             </View>
           )}
